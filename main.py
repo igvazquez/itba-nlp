@@ -6,6 +6,7 @@ COLUMNS = ['tweet', 'likes', 'retweet_count', 'user_screen_name', 'user_descript
 LANG = 'en'
 TW_USERNAME_REGEX = "@[a-zA-Z0-9_]{0,15}"
 URL_REGEX = "\b(?:https?:\/\/|www\.)\S+\b"
+SPACES_REGEX = "\s+"
 
 def is_lang(row, lang='en'):
     prediction = cld3.get_language(row['tweet'])
@@ -30,8 +31,8 @@ def delete_urls(df):
     df['tweet'] = df['tweet'].replace(URL_REGEX, '', regex=True)
     return df
 
-def delete_leading_and_trailing_spaces(df):
-    df['tweet'] = df['tweet'].apply(lambda x: x.strip())
+def delete_multiple_spaces(df):
+    df['tweet'] = df['tweet'].replace(SPACES_REGEX, '', regex=True)
 
 
 def filter_by_language(df, lang='en'):
@@ -61,9 +62,9 @@ if __name__ == '__main__':
     trump_df['tweet'] = trump_df['tweet'].replace(URL_REGEX, '', regex=True)
     biden_df['tweet'] = biden_df['tweet'].replace(URL_REGEX, '', regex=True)
 
-    # Deleting leading and trailing spaces
-    trump_df['tweet'] = trump_df['tweet'].apply(lambda x: x.strip())
-    biden_df['tweet'] = biden_df['tweet'].apply(lambda x: x.strip())
+    # Deleting spaces
+    trump_df['tweet'] = trump_df['tweet'].replace(SPACES_REGEX, ' ', regex=True)
+    biden_df['tweet'] = biden_df['tweet'].replace(SPACES_REGEX, ' ', regex=True)
 
     trump_df = filter_by_language(trump_df, LANG)
     biden_df = filter_by_language(biden_df, LANG)
