@@ -1,4 +1,4 @@
-import cld3
+import gcld3
 import pandas as pd
 
 COLUMNS = ['tweet', 'likes', 'retweet_count', 'user_screen_name', 'user_description', 'user_followers_count']
@@ -9,7 +9,7 @@ SPACES_REGEX = "\s+"
 
 
 def is_lang(row, lang='en'):
-    prediction = cld3.get_language(row['tweet'])
+    prediction = gcld3.get_language(row['tweet'])
     if prediction.language == lang and prediction.is_reliable:
         return True
     else:

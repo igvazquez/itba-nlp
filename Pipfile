@@ -6,10 +6,11 @@ name = "pypi"
 [packages]
 numpy = "*"
 pandas = "*"
-pycld3 = "*"
+gcld3 = "*"
 plotly = "*"
 pydantic = "*"
 pyyaml = "*"
+jupyter = "*"
 
 [dev-packages]
 
