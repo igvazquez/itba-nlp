@@ -1,12 +1,12 @@
-import pandas as pd
-from functools import partial
 import cld3
+import pandas as pd
 
 COLUMNS = ['tweet', 'likes', 'retweet_count', 'user_screen_name', 'user_description', 'user_followers_count']
 LANG = 'en'
 TW_USERNAME_REGEX = "@[a-zA-Z0-9_]{0,15}"
 URL_REGEX = "\b(?:https?:\/\/|www\.)\S+\b"
 SPACES_REGEX = "\s+"
+
 
 def is_lang(row, lang='en'):
     prediction = cld3.get_language(row['tweet'])
@@ -19,17 +19,21 @@ def is_lang(row, lang='en'):
 def get_selected_columns(df, columns):
     return df[columns]
 
+
 def delete_hashtag_symbol(df):
     df['tweet'] = df['tweet'].replace('#', '', regex=True)
     return df
+
 
 def delete_twitter_username(df):
     df['tweet'] = df['tweet'].replace(TW_USERNAME_REGEX, '', regex=True)
     return df
 
+
 def delete_urls(df):
     df['tweet'] = df['tweet'].replace(URL_REGEX, '', regex=True)
     return df
+
 
 def delete_multiple_spaces(df):
     df['tweet'] = df['tweet'].replace(SPACES_REGEX, '', regex=True)
